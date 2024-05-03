@@ -19,7 +19,10 @@ const sessionMiddleware = require('./session/mongoStorage')
 const productRouter = require('./routes/products.router')
 const cartRouter = require('./routes/carts.router')
 const viewsRouter = require('./routes/views.router')
+
+//definir sessiony jwt router
 const sessionsRouter = require('./routes/session.router')
+const jwtRouter = require('./routes/jwt.router')
 
 //definir los Managers y Modelos
 const fsProductManager = require('./dao/fsManagers/ProductManager')
@@ -70,6 +73,7 @@ app.use('/api/products', productRouter)
 app.use('/api/carts', cartRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/', viewsRouter)
+app.use('/api', jwtRouter)
 
 // app.get('/', (req, res) => {
 //     if (req.session.counter) {
