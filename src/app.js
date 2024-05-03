@@ -20,7 +20,7 @@ const productRouter = require('./routes/products.router')
 const cartRouter = require('./routes/carts.router')
 const viewsRouter = require('./routes/views.router')
 
-//definir sessiony jwt router
+//definir sessiony y jwt routers
 const sessionsRouter = require('./routes/session.router')
 const jwtRouter = require('./routes/jwt.router')
 
