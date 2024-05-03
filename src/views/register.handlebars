@@ -1,0 +1,27 @@
+<div class="container col-md-5">
+    <h1 class="titulo-importante">Registrar Nuevo Usuario</h1>
+    <form action="/api/sessions/register" method="post" enctype="application/x-www-form-urlencoded">
+        <div>
+            <label for="first_name">First Name:</label>
+            <input type="text" class="form-control my-2" id="first_name" name="firstName" required>
+        </div>
+        <div>
+            <label for="last_name">Last Name:</label>
+            <input type="text" class="form-control my-2" id="last_name" name="lastName" required>
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" class="form-control my-2" id="age" name="age" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" class="form-control my-2" required />
+        </div>
+        <div>
+            <label for="pass">Password:</label>
+            <input type="password" name="password" id="pass" class="form-control my-2" required />
+        </div>
+        
+        <button type="submit" class="btn btn-info text-decoration text-center">Register</button>
+    </form>
+</div>

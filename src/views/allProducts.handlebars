@@ -1,0 +1,47 @@
+<div class="item-list-container">
+    <h1 class="titulo-importante">Productos de la Tienda</h1>
+    <div class="container col-md-5 my-5 ">
+        <div>
+            <p class="p-1 mt-1 mb-1">Bienvenido,
+                <strong>{{user.firstName}} {{user.lastName}}</strong> !!!
+            </p>
+            <p class="p-1 mt-1 mb-1">Ud ha ingresado bajo el rol: <strong>{{user.rol}}</strong></p>
+        </div>
+        <a href="/profile">
+            <button type="submit" class="btn btn-info text-decoration text-center">Mi Perfil</button>
+        </a>
+        <a href="/api/sessions/logout">
+            <button type="submit" class="btn btn-info text-decoration text-center">Logout</button>
+        </a>
+    </div>
+</div>
+<div class="text-center mb-1">
+    <div class="item-list" id="productsList">
+        {{#each filteredProducts.docs}}
+        <div class="card text-bg-light mb-3 item" id='{{_id}}'>
+            <div class="card-header">{{category}}</div>
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <img src="/images/productos/{{thumbnail}}" alt={{title}} width="270" />
+                <p class="card-text item-precio">$ {{price}}</p>
+                {{!-- <p class="card-text item-stock">Stock Disponible: {{this.stock}}</p> --}}
+                {{!-- <p class="card-text item-descripcion">{{this.description}}</p> --}}
+                <a href="/products/detail/{{_id}}"
+                    class="btn btn-secondary text-decoration text-center btn-ver-detalle">Ver Detalle</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div>
+        <p class="card-text item-precio">Página {{filteredProducts.page}}</p>
+        {{#if filteredProducts.hasPrevPage}}
+        <a href="/products?page={{filteredProducts.prevPage}}" class="card-text item-precio">Página
+            anterior</a>
+        {{/if}}
+        {{#if filteredProducts.hasNextPage}}
+        <a href="/products?page={{filteredProducts.nextPage}}" class="card-text item-precio">Página
+            siguiente</a>
+        {{/if}}
+    </div>
+</div>
+</div>

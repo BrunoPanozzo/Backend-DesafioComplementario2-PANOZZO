@@ -1,0 +1,37 @@
+<div class="item-list-container">
+    <h1 class="titulo-importante">Administración de los Productos de la Tienda</h1>
+<div class="text-center mb-1">
+    <a href="/products/create" class="btn btn-info text-decoration
+                    text-center">Agregar producto
+    </a></div>
+    <div class="item-list" id="productsList">
+        {{#each allProducts.docs}}
+        <div class="card text-bg-light mb-3 item" id='{{this._id}}'>
+            <div class="card-header">{{category}}</div>
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <img src="/images/productos/{{thumbnail}}" alt={{title}} width="270" />
+                <p class="card-text item-precio">$ {{this.price}}</p>
+                <p class="card-text item-stock">Stock Disponible: {{this.stock}}</p>
+                <p class="card-text item-descripcion">{{this.description}}</p>
+            </div>
+            <div class"col align-self-center">
+                <button type="button" class="btn btn-danger text-decoration
+                    text-center btn-eliminarItem" id='{{this._id}}'>Eliminar producto
+                </button>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div>
+            <p class="card-text item-precio">Página {{allProducts.page}}</p>
+            {{#if allProducts.hasPrevPage}}
+            <a href="/products?page={{allProducts.prevPage}}" class="card-text item-precio">Página
+                anterior</a>
+            {{/if}}
+            {{#if allProducts.hasNextPage}}
+            <a href="/products?page={{allProducts.nextPage}}" class="card-text item-precio">Página
+                siguiente</a>
+            {{/if}}
+        </div>
+</div>

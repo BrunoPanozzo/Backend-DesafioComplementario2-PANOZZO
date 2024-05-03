@@ -1,0 +1,22 @@
+<div>
+  {{#if isNotLoggedIn}}
+  <a href="/login">
+    <button type="submit" class="btn btn-info text-decoration my-5 ms-5 text-center">Login</button>
+  </a>  
+  <a href="/reset_password">
+    <button type="submit" class="btn btn-info text-decoration my-5 ms-5 text-center">Reset Password</button>
+  </a>
+  <a href="/register">
+    <button type="submit" class="btn btn-info text-decoration my-5 ms-5 text-center">Register</button>
+  </a>
+  {{/if}}
+
+  {{#if isLoggedIn}}
+  <a href="/profile">
+    <button type="submit" class="btn btn-info text-decoration my-5 ms-5 text-center">Mi Perfil</button>
+  </a>
+  <a href="/api/sessions/logout">
+    <button type="submit" class="btn btn-info text-decoration my-5 ms-5 text-center">Logout</button>
+  </a>
+  {{/if}}
+</div>

@@ -1,0 +1,35 @@
+.cart-list {
+    background-color: #f1edeb;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+}
+
+.cart-resumen-compra {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.prod {
+    margin: 20px;
+    padding: 5px;
+    width: 100%;
+}
+
+.item-precio {
+    padding-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.prod:hover {
+    border: 1px solid #a79393;
+    border-radius: 10px;
+    background-color: rgb(210, 210, 232);
+}

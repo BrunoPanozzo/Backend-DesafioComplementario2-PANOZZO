@@ -1,0 +1,50 @@
+<div class="container col-md-5">
+    <h1 class="titulo-importante">Alta de Producto</h1>
+    <form action="/api/products/create" id ="newProductForm" method="post" enctype="application/x-www-form-urlencoded">
+        <div>
+            <label>Título:</label>
+            <input type="text" class="form-control my-2" id="title" name="title" required>
+        </div>
+        <div>
+            <label>Descripción:</label>
+            <textarea type="text" class="form-control my-2" id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label>Precio:</label>
+            <input type="number" class="form-control my-2" id="price" name="price" required>
+        </div>
+        <div>
+            <label>Imágenes:</label>
+            <input type="text" class="form-control my-2" id="thumbnail" name="thumbnail">
+        </div>
+        <div>
+            <label>Código:</label>
+            <input type="text" class="form-control my-2" id="code" name="code" required>
+        </div>
+        <div>
+            <label>Stock:</label>
+            <input type="number" class="form-control my-2" id="stock" name="stock" required>
+        </div>
+        <div>
+            <label>Categoría:</label>
+            <input type="text" class="form-control my-2" id="category" name="category" required>
+        </div>
+        <div class="mb-3">
+            <label class="mr-3">Estado:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input mx-5" type="radio" name="status" id="statusTrue" value="true" checked
+                    required>
+                <label class="form-check-label mr-3" for="statusTrue">Verdadero</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input mx-5" type="radio" name="status" id="statusFalse" value="false" required>
+                <label class="form-check-label mr-3" for="statusFalse">Falso</label>
+            </div>
+        </div>
+        <div class="text-center mb-1">
+            <button type="submit" class="btn btn-info text-decoration
+                                text-center">Agregar producto
+            </button>
+        </div>
+    </form>
+</div>

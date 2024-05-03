@@ -1,0 +1,50 @@
+.item-detail {
+    background-color: #f1ebeb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    padding: 100px; 
+}
+
+.item-more-detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;   
+}
+
+.item-detail-img {
+    width: 600px;
+    height: auto;
+}
+
+.item-detail-nombre {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.item-detail-precio {
+    padding-bottom: 5px;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.item-detail-stock {
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+.item-detail-descripcion {
+    padding-top: 80px;
+    font-size: 25px;
+    align-content: flex-start;
+}
+
+.item-detail-resumen-compra {
+    padding-bottom: 5px;
+    font-size: 25px;
+    font-weight: bold; 
+}

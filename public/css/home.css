@@ -1,0 +1,54 @@
+.titulo-importante {
+    font-weight: bold;
+    font-size: 45px;
+    font-family: "Black Han Sans", sans-serif;
+    text-align: center;
+    padding: 40px;
+    color: blue;
+}
+
+.item-list { 
+    background-color: #c0bebd;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content:center;
+    padding: 10px;
+}
+
+.item {
+    margin: 5px;
+    padding: 5px;
+    max-width: 18rem;
+    min-height: 28rem;
+}
+
+.item:hover {
+    border: 1px solid #a79393;
+    border-radius: 10px;
+}
+
+.item-precio {
+    padding-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.item-stock {
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+.item-descripcion {
+    padding-top: 80px;
+    font-size: 15px;
+    align-content: flex-start;
+}
+
+.btn-ver-detalle:hover {
+    background-color: rgb(53, 53, 218);
+}
+

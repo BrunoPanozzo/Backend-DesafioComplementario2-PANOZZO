@@ -1,0 +1,21 @@
+<div class="item-list-container">
+    <h1 class="titulo-importante">Producto Seleccionado</h1>
+    <h2 class="item-detail-nombre">{{product.category}}</h2>
+    <h3 class="item-detail-nombre">{{product.title}}</h3>
+    <div class="item-detail">
+        <div class="item-more-detail">
+            <img class="item-detail-img" src="/images/productos/{{product.thumbnail}}" alt={{product.title}} />
+            <div>
+                <p class="item-detail-precio">$ {{product.price}}</p>
+                <p class="item-detail-stock">Stock Disponible: {{product.stock}}</p>
+                {{!-- <p class="item-detail-resumen-compra">Ud. ha agregado 1 artículo a su carrito.</p> --}}
+                <a href="/products/addcart/{{product._id}}" id="btn-confirmar"
+                    class="btn btn-secondary text-decoration text-center btn-ver-detalle">Agregar al carrito</a>
+                <a href="/carts/{{cid}}" class="btn btn-secondary text-decoration text-center btn-ver-detalle">Ver mi carrito</a>
+            </div>
+        </div>
+        <div>
+            <p class="item-detail-descripcion">{{product.description}}</p>
+        </div>
+    </div>
+</div>
