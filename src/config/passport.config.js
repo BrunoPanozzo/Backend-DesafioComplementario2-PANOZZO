@@ -1,16 +1,33 @@
 const passport = require('passport')
 const localStrategy = require('passport-local')
-const githubStrategy  = require('passport-github2')
+const githubStrategy = require('passport-github2')
+const { Strategy, ExtractJwt } = require('passport-jwt')
 const userModel = require('../dao/models/user.model')
 const { hashPassword, isValidPassword } = require('../utils/hashing')
+const { secretCode } = require('../utils/jwt')
 const { clientID, clientSecret, callbackURL } = require('./github.private')
 
 const LocalStrategy = localStrategy.Strategy
 const GithubStrategy = githubStrategy.Strategy
+const JwtStrategy = Strategy
 
 const initializeStrategy = () => {
 
-    
+    const cookieExtractor = req => req && req.cookies ? req.cookies['userToken'] : null
+
+    //defino un middleware para extraer el current user a partir de un token guardado en una cookie
+    passport.use('jwt', new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: secretCode
+    }, async (jwtPayload, done) => {
+        try {
+            return done(null, jwtPayload.user)
+        }
+        catch (err) {
+            done(err)
+        }
+    }))
+
     //defino un middleware para el 'register' y su estrategia asociada
     passport.use('register', new LocalStrategy({
         passReqToCallback: true,
@@ -32,7 +49,8 @@ const initializeStrategy = () => {
                 lastName,
                 email,
                 age: + age,
-                password: hashPassword(password)
+                password: hashPassword(password),
+                cart: ""
             }
 
             const result = await userModel.create(newUser)
@@ -66,7 +84,8 @@ const initializeStrategy = () => {
                     email: username,
                     password: password,
                     age: 47,
-                    _id: "dflksgd8sfg7sd890fg"
+                    _id: "dflksgd8sfg7sd890fg",
+                    cart: ""
                 }
             }
             else {
@@ -97,7 +116,7 @@ const initializeStrategy = () => {
     passport.use('reset_password', new LocalStrategy({
         usernameField: 'email'
     }, async (username, password, done) => {
-        try {           
+        try {
 
             if (!username || !password) {
                 // return res.status(400).json({ error: 'Credenciales inválidas!' })
@@ -109,16 +128,15 @@ const initializeStrategy = () => {
             if (username === "adminCoder@coder.com") {
                 return done(null, false)
             }
-            else {
-                //lo busco en la BD
-                user = await userModel.findOne({ email: username })
-                if (!user) {
-                    // return res.status(400).send('No se encontró el usuario!')
-                    return done(null, false)
-                }
 
-                await userModel.updateOne({ email: username }, { $set: { password: hashPassword(password) } })
+            //lo busco en la BD
+            user = await userModel.findOne({ email: username })
+            if (!user) {
+                // return res.status(400).send('No se encontró el usuario!')
+                return done(null, false)
             }
+
+            await userModel.updateOne({ email: username }, { $set: { password: hashPassword(password) } })
 
             // reset password exitoso
             return done(null, user)
@@ -150,7 +168,8 @@ const initializeStrategy = () => {
                 lastName,
                 age: 30,
                 email: profile._json.email,
-                password: ''
+                password: '',
+                cart: ''
             }
             const result = await userModel.create(newUser)
             done(null, result)
