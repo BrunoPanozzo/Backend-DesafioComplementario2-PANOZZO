@@ -3,7 +3,7 @@ const userModel = require('../dao/models/user.model')
 const { isValidPassword } = require('../utils/hashing')
 const { generateToken, verifyToken } = require('../utils/jwt')
 const passport = require('passport')
-
+const passportMiddleware = require('../middlewares/passport.middleware')
 const router = Router()
 
 router.post('/login', async (req, res) => {
@@ -51,7 +51,7 @@ router.get('/private', verifyToken, (req, res) => {
     res.send(`Bienvenido ${email}, este es contenido privado y protegido`)
 })
 
-router.get('/users/current', passport.authenticate('jwt', {session: false}), async (req, res) => {
+router.get('/users/current', passportMiddleware('jwt') /*passport.authenticate('jwt', {session: false})*/, (req, res) => {
     return res.json(req.user)
 })
 
