@@ -2,14 +2,17 @@ const passport = require('passport')
 const localStrategy = require('passport-local')
 const githubStrategy = require('passport-github2')
 const { Strategy, ExtractJwt } = require('passport-jwt')
+const googleStrategy = require('passport-google-oauth20')
 const userModel = require('../dao/models/user.model')
 const { hashPassword, isValidPassword } = require('../utils/hashing')
 const { secretCode } = require('../utils/jwt')
 const { clientID, clientSecret, callbackURL } = require('./github.private')
+const { clientIDGoogle, clientSecretGoogle, callbackUrlGoogle } = require('./google.private')
 
 const LocalStrategy = localStrategy.Strategy
 const GithubStrategy = githubStrategy.Strategy
 const JwtStrategy = Strategy
+const GoogleStrategy = googleStrategy.Strategy
 
 const initializeStrategy = () => {
 
@@ -71,7 +74,7 @@ const initializeStrategy = () => {
 
             if (!username || !password) {
                 // return res.status(400).json({ error: 'Credenciales inválidas!' })
-                return done(null, false)
+                return done(null, false, 'Credenciales inválidas!')
             }
 
             //verifico si es el usuario "ADMIN"
@@ -93,13 +96,13 @@ const initializeStrategy = () => {
                 user = await userModel.findOne({ email: username })
                 if (!user) {
                     // return res.status(401).send('No se encontró el usuario!')
-                    return done(null, false)
+                    return done(null, false, 'No se encontró el usuario!')
                 }
 
                 // validar el password
                 if (!isValidPassword(password, user.password)) {
                     // return res.status(401).json({ error: 'Password inválida!' })
-                    return done(null, false)
+                    return done(null, false, 'Password inválida!')
                 }
             }
 
@@ -152,9 +155,39 @@ const initializeStrategy = () => {
         callbackURL
     }, async (_accessToken, _refreshToken, profile, done) => {
         try {
-            // console.log(profile)
-
             const user = await userModel.findOne({ email: profile._json.email })
+            if (user) {
+                return done(null, user)
+            }
+
+            // crear el usuario porque no existe
+            const fullName = profile._json.name
+            const firstName = fullName.substring(0, fullName.lastIndexOf(' '))
+            const lastName = fullName.substring(fullName.lastIndexOf(' ') + 1)
+            const newUser = {
+                firstName,
+                lastName,
+                age: 30,
+                email: profile._json.email,
+                password: '',
+                cart: ''
+            }
+            const result = await userModel.create(newUser)
+            done(null, result)
+        }
+        catch (err) {
+            done(err)
+        }
+    }))
+    
+    passport.use('google', new GoogleStrategy({
+        clientID: clientIDGoogle,
+        clientSecret: clientSecretGoogle,
+        callbackURL: callbackUrlGoogle
+    }, async (_accessToken, _refreshToken, profile, done) => {
+        try {
+            console.log(profile)
+            const user = await userModel.findOne({ email: profile._json.given_name })
             if (user) {
                 return done(null, user)
             }

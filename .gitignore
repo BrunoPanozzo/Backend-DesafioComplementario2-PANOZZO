@@ -3,3 +3,7 @@
 
 # packages
 /package-lock.json
+
+# config files
+/config/google.private.js
+/config/github.private.js

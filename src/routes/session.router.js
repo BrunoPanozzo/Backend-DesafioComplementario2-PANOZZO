@@ -2,10 +2,11 @@ const { Router } = require('express')
 const userModel = require('../dao/models/user.model')
 const { hashPassword, isValidPassword } = require('../utils/hashing')
 const passport = require('passport')
+const passportMiddleware = require('../middlewares/passport.middleware')
 
 const router = Router()
 
-router.post('/login', passport.authenticate('login', { failureRedirect: '/api/sessions/faillogin' }), (req, res) => {
+router.post('/login', passportMiddleware('login'), /*passport.authenticate('login', { failureRedirect: '/api/sessions/faillogin' },*/ (req, res) => {
     // console.log(req.body)
     if (!req.user)
         return res.status(400).send({ status: 'error', error: 'Credenciales inválidas!' })
@@ -23,7 +24,7 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/api/se
 })
 
 router.get('/faillogin', (req, res) => {
-    res.send({ status: 'error', message: 'Login erróneo.!' })
+    res.send({ status: 'error', message: 'Login erróneo!' })
 })
 
 router.post('/reset_password', passport.authenticate('reset_password', { failureRedirect: '/api/sessions/failreset_password' }), async (req, res) => {
@@ -63,10 +64,44 @@ router.get('/githubcallback', passport.authenticate('github', { failureRedirect:
     return res.redirect('/products')
 })
 
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }), () => { })
+
+router.get('/googlecallback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    // req.session.user = { _id: req.user._id }
+    console.log(req.user)
+    req.session.user = {
+        _id: req.user._id,
+        age: req.user.age,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        email: req.user.email,
+        rol: req.user.rol
+    }
+
+    // no es necesario validar el login aquí, ya lo hace passport!
+    return res.redirect('/products')
+})
+
 router.get('/logout', (req, res) => {
     req.session.destroy(_ => {
         res.redirect('/')
     })
+})
+
+router.get('/current', (req, res) => {
+    if (!req.user)
+        return res.status(400).send({ status: 'error', error: 'No existe un usuario logeado!' })
+    req.session.user = {
+        _id: req.user._id,
+        age: req.user.age,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        email: req.user.email,
+        rol: req.user.rol
+    }
+
+    // no es necesario validar el login aquí, ya lo hace passport!
+    return res.redirect('/profile')
 })
 
 module.exports = router
