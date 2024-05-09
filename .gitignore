@@ -7,3 +7,4 @@
 # config files
 **/google.private.js
 **/github.private.js
+src/config/pepe.js
