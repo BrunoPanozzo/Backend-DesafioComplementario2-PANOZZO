@@ -5,6 +5,5 @@
 /package-lock.json
 
 # config files
-**/google.private.js
-**/github.private.js
-src/config/pepe.js
+src/config/google.private.js
+src/config/github.private.js
