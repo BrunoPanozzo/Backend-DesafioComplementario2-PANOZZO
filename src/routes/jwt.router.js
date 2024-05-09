@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
             email: email,
             password: password,
             age: 47,
-            cart: "",
+            cart: null,
             _id: "dflksgd8sfg7sd890fg"
         }
     }

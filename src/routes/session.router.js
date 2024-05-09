@@ -64,11 +64,11 @@ router.get('/githubcallback', passport.authenticate('github', { failureRedirect:
     return res.redirect('/products')
 })
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }), () => { })
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }), () => { })
 
 router.get('/googlecallback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
     // req.session.user = { _id: req.user._id }
-    console.log(req.user)
+    // console.log(req.user)
     req.session.user = {
         _id: req.user._id,
         age: req.user.age,

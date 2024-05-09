@@ -137,11 +137,11 @@ class ProductManager {
             if (!page) page = 1
             let { limit, category, availability, sort } = { limit: 10, page: page, availability: 1, sort: 'asc', ...filters }
            
-            console.log(limit)
-            console.log(page)
-            console.log(category)
-            console.log(availability)
-            console.log(sort)
+            // console.log(limit)
+            // console.log(page)
+            // console.log(category)
+            // console.log(availability)
+            // console.log(sort)
 
             if (availability == 1) {
                 if (category)
@@ -187,7 +187,7 @@ class ProductManager {
     }
 
     addProduct = async (title, description, price, thumbnail, code, stock, status, category) => {
-        console.log(this.#getNuevoID())
+        // console.log(this.#getNuevoID())
         let product = await productModel.create({
             id: this.#getNuevoID(),
             title,

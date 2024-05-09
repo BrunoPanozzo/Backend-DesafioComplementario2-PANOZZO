@@ -53,7 +53,7 @@ const initializeStrategy = () => {
                 email,
                 age: + age,
                 password: hashPassword(password),
-                cart: ""
+                cart:null
             }
 
             const result = await userModel.create(newUser)
@@ -88,7 +88,7 @@ const initializeStrategy = () => {
                     password: password,
                     age: 47,
                     _id: "dflksgd8sfg7sd890fg",
-                    cart: ""
+                    cart: null
                 }
             }
             else {
@@ -186,23 +186,22 @@ const initializeStrategy = () => {
         callbackURL: callbackUrlGoogle
     }, async (_accessToken, _refreshToken, profile, done) => {
         try {
-            console.log(profile)
-            const user = await userModel.findOne({ email: profile._json.given_name })
+            const email = profile.emails[0].value;
+            const user = await userModel.findOne({ email: email })
             if (user) {
                 return done(null, user)
             }
 
             // crear el usuario porque no existe
-            const fullName = profile._json.name
-            const firstName = fullName.substring(0, fullName.lastIndexOf(' '))
-            const lastName = fullName.substring(fullName.lastIndexOf(' ') + 1)
+            const firstName = profile._json.given_name
+            const lastName = profile._json.family_name
             const newUser = {
                 firstName,
                 lastName,
                 age: 30,
-                email: profile._json.email,
+                email: email,
                 password: '',
-                cart: ''
+                cart: null
             }
             const result = await userModel.create(newUser)
             done(null, result)
