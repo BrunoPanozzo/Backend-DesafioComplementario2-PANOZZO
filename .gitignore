@@ -5,5 +5,5 @@
 /package-lock.json
 
 # config files
-src/config/google.private.js
-src/config/github.private.js
+# src/config/google.private.js
+# src/config/github.private.js
